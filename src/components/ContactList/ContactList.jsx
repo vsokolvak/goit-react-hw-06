@@ -1,4 +1,4 @@
-import { contactDelete } from "../../redux/contactsSlice";
+import { deleteContact } from "../../redux/contactsSlice";
 import Contact from "../Contact/Contact";
 import style from "./ContactList.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,11 +12,8 @@ function ContactList () {
 
   const dispatch = useDispatch()
 
-  const deleteContact = (id) => {
-    const newContactData = contactsData.filter((el) => {
-      if (el.id !== id) return el;
-    })
-    dispatch(contactDelete(newContactData))
+  const deleteContactt = (id) => {
+    dispatch(deleteContact(id));
   };
 
   const filterData = contactsData.filter((el) =>
@@ -27,7 +24,7 @@ function ContactList () {
     <ul className={style.contactList}>
       {filterData.map((el) => (
         <li key={el.id}>
-          <Contact contact={el} deleteContact={deleteContact} />
+          <Contact contact={el} deleteContact={deleteContactt} />
         </li>
       ))}
     </ul>
