@@ -1,14 +1,14 @@
-import { deleteContact } from "../../redux/contactsSlice";
+import { useMemo } from "react";
+import { deleteContact, selectContacts } from "../../redux/contactsSlice";
+import { selectNameFilter } from "../../redux/filtersSlice";
 import Contact from "../Contact/Contact";
 import style from "./ContactList.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
 function ContactList () {
 
-  const contactsData = useSelector(state => {
-    return state.contacts.items
-  })
-  const filterName = useSelector(state => state.filters.name)
+  const contactsData = useSelector(selectContacts)
+  const filterName = useSelector(selectNameFilter)
 
   const dispatch = useDispatch()
 
@@ -16,8 +16,11 @@ function ContactList () {
     dispatch(deleteContact(id));
   };
 
-  const filterData = contactsData.filter((el) =>
-    el.name.toLowerCase().includes(filterName.toLowerCase())
+  const filterData = useMemo( () => {
+    return contactsData.filter((el) =>
+      el.name.toLowerCase().includes(filterName.toLowerCase())
+    )},
+    [filterName, contactsData]
   );
 
   return (

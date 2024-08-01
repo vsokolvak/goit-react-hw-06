@@ -13,7 +13,6 @@ const slice = createSlice({
       state.items.push(action.payload);
     },
     deleteContact(state, action) {
-      debugger
       const index = state.items.findIndex((contact) => contact.id === action.payload);
       state.items.splice(index, 1);
     },
@@ -21,5 +20,7 @@ const slice = createSlice({
 });
 
 export const { addContact, deleteContact } = slice.actions;
+
+export const selectContacts = state => state.contacts.items
 
 export default slice.reducer
